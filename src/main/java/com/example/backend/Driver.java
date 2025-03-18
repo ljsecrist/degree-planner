@@ -39,7 +39,7 @@ public class Driver {
 
         PDFParser.processPDF("src\\main\\resources\\Secrist_Liam_2686252_2_14_2025.pdf");
 
-        generatePlanner(new SheetGenerator("output\\ParsedTranscript.xlsx").getSheet(), majors, minors).printProgress();
+        generatePlanner("output\\ParsedTranscript.xlsx", majors, minors).printProgress();
     }
 
     /**
@@ -51,9 +51,9 @@ public class Driver {
      * @param minors a list of Concentration objects representing the student's minors
      * @return a Student object representing the student's academic planner
      */
-    public static Student generatePlanner(Sheet transcript, ArrayList<Concentration> majors, ArrayList<Concentration> minors){
+    public static Student generatePlanner(String filePath, ArrayList<Concentration> majors, ArrayList<Concentration> minors){
         
-        //Sheet transcript = new SheetGenerator(filePath).getSheet();
+        Sheet transcript = new SheetGenerator(filePath).getSheet();
 
         ArrayList<Course> courses = new ArrayList<Course>();
 
