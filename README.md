@@ -49,3 +49,12 @@ The following objects are used in this project to structure and process data:
   - Stores user-uploaded file information.
   - Submits user data to the backend.
 - **`styles.css`**: Defines the visual styling for the web application.
+
+## Major/Minor Creation
+- **`Column 1`**: Name of the program.
+- **`Column 2`**: Non-sequence requirement; list of required courses, seperated by commas. Sequence requirement; list of sequences, sepersted by semi-colons. Each sequence is a list of courses, seperated by commas.
+- **`Column 3`**: The number of courses or sequences required to complete the requirement.
+- **`Column 4`**: The title of the requirement.
+- **`Column 5`**: List of number requirements. These are represented by the number of courses needed with the number, followed by the number.
+- **`Column 6`**: List of type requirements. These are represented by the number of courses needed with the type, followed by the type.
+- **`Column 7`**: The minimum grade needed to complete the requirement.
