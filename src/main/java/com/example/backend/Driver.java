@@ -34,12 +34,12 @@ public class Driver {
 
         // Uncomment the following lines for different transcript processing options
         // generatePlanner("backend\\src\\main\\resources\\LiamSecrist Transcript.xlsx");
-        // generatePlanner("src\\main\\resources\\Empty Transcript.xlsx", majors, minors).printProgress();
+        generatePlanner("src\\main\\resources\\Empty Transcript.xlsx", majors, minors).printProgress();
         // generatePlanner("src\\main\\resources\\Full Transcript.xlsx", majors, minors).printProgress();
 
         PDFParser.processPDF("src\\main\\resources\\Secrist_Liam_2686252_2_14_2025.pdf");
 
-        generatePlanner("output\\ParsedTranscript.xlsx", majors, minors).printProgress();
+        //generatePlanner("output\\ParsedTranscript.xlsx", majors, minors).printProgress();
     }
 
     /**

@@ -476,7 +476,7 @@ public class Student {
         if (gradeRequirement.equals("")) {
             return "";
         }
-        return " with a minimum grade of " + gradeRequirement;
+        return "\n                 with a minimum grade of " + gradeRequirement;
     }
 
     /**
