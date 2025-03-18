@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -61,8 +62,16 @@ public class FileUploadController {
      */
     @GetMapping("/dropdown-options")
     public Map<String, List<String>> getDropdownOptions() {
-        Sheet majors = new SheetGenerator("src\\main\\resources\\Major-List.xlsx").getSheet();
-        Sheet minors = new SheetGenerator("src\\main\\resources\\Minor-List.xlsx").getSheet();
+        InputStream majorStream = getClass().getClassLoader().getResourceAsStream("Major-List.xlsx");
+        InputStream minorStream = getClass().getClassLoader().getResourceAsStream("Minor-List.xlsx");
+
+        if (majorStream == null || minorStream == null) {
+            throw new RuntimeException("Excel files not found in resources folder!");
+        }
+
+        Sheet majors = new SheetGenerator(majorStream).getSheet();
+        Sheet minors = new SheetGenerator(minorStream).getSheet();
+
 
         ArrayList<String> majorList = new ArrayList<>();
 

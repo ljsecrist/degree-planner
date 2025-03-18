@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * The SheetGenerator class is responsible for reading an Excel file and providing access to its first sheet.
@@ -30,6 +31,15 @@ public class SheetGenerator {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public SheetGenerator(InputStream inputStream) {
+        try {
+            Workbook workbook = WorkbookFactory.create(inputStream);
+            this.sheet = workbook.getSheetAt(0); // Adjust if needed
+        } catch (Exception e) {
+            throw new RuntimeException("Error loading Excel file: " + e.getMessage(), e);
         }
     }
 
