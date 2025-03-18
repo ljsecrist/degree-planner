@@ -28,6 +28,8 @@ public class FileUploadController {
      */
     private static Student currentStudent;
 
+    private static Sheet sheet;
+
     /**
      * Handles the upload of a PDF file, saves it temporarily, and processes it using PDFParser.
      *
@@ -46,7 +48,7 @@ public class FileUploadController {
             file.transferTo(savedFile);
 
             // Process the uploaded PDF using PDFParser
-            PDFParser.processPDF(savedFile.getAbsolutePath());
+            sheet = PDFParser.processPDF(savedFile.getAbsolutePath());
 
             return "File processed successfully: " + file.getOriginalFilename();
         } catch (IOException e) {
@@ -130,16 +132,16 @@ public class FileUploadController {
 
         // Store the generated Student object
 
-        String outputPath = System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
+        // String outputPath = System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
 
-        // Ensure the file exists before trying to open it
-        File parsedFile = new File(outputPath);
-        if (!parsedFile.exists()) {
-            return "Error: Parsed transcript file not found!";
-        }
+        // // Ensure the file exists before trying to open it
+        // File parsedFile = new File(outputPath);
+        // if (!parsedFile.exists()) {
+        //     return "Error: Parsed transcript file not found!";
+        // }
 
 
-        currentStudent = Driver.generatePlanner("ParsedTranscript.xlsx", majors, minors);
+        currentStudent = Driver.generatePlanner(sheet, majors, minors);
 
         return "Selections received successfully!";
     }

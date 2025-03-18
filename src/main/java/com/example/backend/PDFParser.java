@@ -107,7 +107,7 @@ public class PDFParser {
      *
      * @param path the path to the PDF file
      */
-    public static void processPDF(String path) {
+    public static Sheet processPDF(String path) {
         try {
             File file = new File(path);
             PDDocument document = PDDocument.load(file);
@@ -130,10 +130,11 @@ public class PDFParser {
 
             firstColumnLines.addAll(secondColumnLines);
 
-            constructSheet(firstColumnLines);
+            return constructSheet(firstColumnLines);
 
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -254,7 +255,7 @@ public class PDFParser {
      * @param lines the list of parsed lines representing transcript data
      * @return the file path of the generated Excel file
      */
-    public static String constructSheet(List<String> lines) {
+    public static Sheet constructSheet(List<String> lines) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("transcript");
 
@@ -402,7 +403,7 @@ public class PDFParser {
 
         System.out.println("Saving ParsedTranscript.xlsx to: " + System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx");
 
-        return System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
+        return sheet;
     }
 
     /**

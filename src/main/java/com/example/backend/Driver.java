@@ -34,7 +34,7 @@ public class Driver {
 
         // Uncomment the following lines for different transcript processing options
         // generatePlanner("backend\\src\\main\\resources\\LiamSecrist Transcript.xlsx");
-        generatePlanner("src\\main\\resources\\Empty Transcript.xlsx", majors, minors).printProgress();
+        //generatePlanner("src\\main\\resources\\Empty Transcript.xlsx", majors, minors).printProgress();
         // generatePlanner("src\\main\\resources\\Full Transcript.xlsx", majors, minors).printProgress();
 
         PDFParser.processPDF("src\\main\\resources\\Secrist_Liam_2686252_2_14_2025.pdf");
@@ -51,9 +51,9 @@ public class Driver {
      * @param minors a list of Concentration objects representing the student's minors
      * @return a Student object representing the student's academic planner
      */
-    public static Student generatePlanner(String filePath, ArrayList<Concentration> majors, ArrayList<Concentration> minors){
+    public static Student generatePlanner(Sheet transcript, ArrayList<Concentration> majors, ArrayList<Concentration> minors){
         
-        Sheet transcript = new SheetGenerator(filePath).getSheet();
+        //Sheet transcript = new SheetGenerator(filePath).getSheet();
 
         ArrayList<Course> courses = new ArrayList<Course>();
 
