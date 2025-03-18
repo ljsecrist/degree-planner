@@ -23,13 +23,17 @@ public class SheetGenerator {
      *
      * @param xlsx the path to the Excel file
      */
-    public SheetGenerator(String xlsx) {
-        String filePath = xlsx;  // Path to the Excel file
-        try (FileInputStream file = new FileInputStream(new File(filePath));
-             Workbook workbook = new XSSFWorkbook(file)) {
-            this.sheet = workbook.getSheetAt(0);  // Read the first sheet
-
-        } catch (IOException e) {
+    public SheetGenerator(String filePath) {
+        try {
+            // Load the file from the resources folder inside the JAR
+            InputStream fileStream = getClass().getClassLoader().getResourceAsStream(filePath);
+            if (fileStream == null) {
+                throw new IOException("File not found: " + filePath);
+            }
+            
+            Workbook workbook = WorkbookFactory.create(fileStream);
+            this.sheet = workbook.getSheetAt(0);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
