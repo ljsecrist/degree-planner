@@ -28,6 +28,8 @@ public class FileUploadController {
      */
     private static Student currentStudent;
 
+    private static Sheet sheet;
+
     /**
      * Handles the upload of a PDF file, saves it temporarily, and processes it using PDFParser.
      *
@@ -35,38 +37,26 @@ public class FileUploadController {
      * @return a message indicating whether the file was processed successfully or an error occurred
      */
     @PostMapping("/upload")
-    public Map<String, String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        Map<String, String> response = new HashMap<>();
-        
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
-            // Create a unique filename using timestamp
-            String timestamp = String.valueOf(System.currentTimeMillis());
-            String uniqueFilename = "transcript_" + timestamp + "_" + file.getOriginalFilename();
-
-            // Define the upload directory
+            // Save the file temporarily
             String uploadDir = System.getProperty("user.dir") + "/uploads/";
             File dir = new File(uploadDir);
-            if (!dir.exists()) dir.mkdirs(); // Ensure directory exists
+            if (!dir.exists()) dir.mkdirs(); // Create directory if not exists
 
-            // Save the file with a unique name
-            File savedFile = new File(uploadDir + uniqueFilename);
+            File savedFile = new File(uploadDir + file.getOriginalFilename());
             file.transferTo(savedFile);
 
             // Process the uploaded PDF using PDFParser
-            PDFParser.processPDF(savedFile.getAbsolutePath());
+            sheet = PDFParser.processPDF(savedFile.getAbsolutePath());
 
-            // Return the unique filename to the frontend
-            response.put("message", "File processed successfully.");
-            response.put("filename", uniqueFilename);
+            return "File processed successfully: " + file.getOriginalFilename();
         } catch (IOException e) {
-            response.put("error", "File upload failed: " + e.getMessage());
+            return "File upload failed: " + e.getMessage();
         } catch (Exception e) {
-            response.put("error", "Error processing file: " + e.getMessage());
+            return "Error processing file: " + e.getMessage();
         }
-
-        return response;
     }
-
     
     /**
      * Retrieves dropdown options for majors and minors from Excel files.
@@ -142,18 +132,18 @@ public class FileUploadController {
 
         // Store the generated Student object
 
-        String outputPath = System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
+        // String outputPath = System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
 
-        // Ensure the file exists before trying to open it
-        File parsedFile = new File(outputPath);
-        if (!parsedFile.exists()) {
-            return "Error: Parsed transcript file not found!";
-        }
+        // // Ensure the file exists before trying to open it
+        // File parsedFile = new File(outputPath);
+        // if (!parsedFile.exists()) {
+        //     return "Error: Parsed transcript file not found!";
+        // }
 
         // Now safely load the file
 
 
-        currentStudent = Driver.generatePlanner(outputPath, majors, minors);
+        currentStudent = Driver.generatePlanner(sheet, majors, minors);
 
         return "Selections received successfully!";
     }
