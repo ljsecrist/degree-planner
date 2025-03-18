@@ -130,7 +130,18 @@ public class FileUploadController {
 
         // Store the generated Student object
 
-        currentStudent = Driver.generatePlanner("ParsedTranscript.xlsx", majors, minors);
+        String outputPath = System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
+
+        // Ensure the file exists before trying to open it
+        File parsedFile = new File(outputPath);
+        if (!parsedFile.exists()) {
+            return "Error: Parsed transcript file not found!";
+        }
+
+        // Now safely load the file
+
+
+        currentStudent = Driver.generatePlanner(outputPath, majors, minors);
 
         return "Selections received successfully!";
     }
