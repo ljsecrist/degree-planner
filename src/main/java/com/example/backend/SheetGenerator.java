@@ -1,10 +1,6 @@
 package com.example.backend;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,10 +21,10 @@ public class SheetGenerator {
      */
     public SheetGenerator(String filePath) {
         try {
-            // Load the file from the resources folder inside the JAR
+            // Load the file from the JAR resources
             InputStream fileStream = getClass().getClassLoader().getResourceAsStream(filePath);
             if (fileStream == null) {
-                throw new IOException("File not found: " + filePath);
+                throw new IOException("File not found in classpath: " + filePath);
             }
             
             Workbook workbook = WorkbookFactory.create(fileStream);

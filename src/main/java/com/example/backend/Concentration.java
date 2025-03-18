@@ -49,7 +49,7 @@ public class Concentration {
      * @return an {@code ArrayList} of {@code Requirement} objects for the major concentration.
      */
     private ArrayList<Requirement> getMajorRequirements() {
-        return loadRequirementsFromSheet("src\\main\\resources\\Major-Requirements.xlsx");
+        return loadRequirementsFromSheet("Major-Requirements.xlsx");
     }
 
     /**
@@ -58,7 +58,7 @@ public class Concentration {
      * @return an {@code ArrayList} of {@code Requirement} objects for the minor concentration.
      */
     private ArrayList<Requirement> getMinorRequirements() {
-        return loadRequirementsFromSheet("src\\main\\resources\\Minor-Requirements.xlsx");
+        return loadRequirementsFromSheet("Minor-Requirements.xlsx");
     }
 
     /**
