@@ -49,3 +49,7 @@ The following objects are used in this project to structure and process data:
   - Stores user-uploaded file information.
   - Submits user data to the backend.
 - **`styles.css`**: Defines the visual styling for the web application.
+
+## Major/Minor Creation
+- **`Column 1`**: Name of the program.
+- **`Column 2`**: Non-sequence requirement; list of 
