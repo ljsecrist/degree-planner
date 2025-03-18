@@ -5,10 +5,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.*;
 
 import org.apache.poi.ss.usermodel.*;
 
@@ -146,5 +148,17 @@ public class FileUploadController {
         }
 
         return currentStudent.getProgressString();
+    }
+
+    @GetMapping("/debug-file")
+    public String checkFileExists() {
+        URL majorUrl = getClass().getClassLoader().getResource("Major-List.xlsx");
+        URL minorUrl = getClass().getClassLoader().getResource("Minor-List.xlsx");
+
+        if (majorUrl == null || minorUrl == null) {
+            return "One or both Excel files are missing! Major: " + majorUrl + ", Minor: " + minorUrl;
+        } else {
+            return "Files found! Major: " + majorUrl.getPath() + ", Minor: " + minorUrl.getPath();
+        }
     }
 }
