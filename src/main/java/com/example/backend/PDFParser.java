@@ -392,7 +392,7 @@ public class PDFParser {
         if (!dir.exists()) {
             dir.mkdirs(); // Create directory if it doesn't exist
         }
-        try (FileOutputStream fos = new FileOutputStream("output\\ParsedTranscript.xlsx")) {
+        try (FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx")) {
             workbook.write(fos);
             System.out.println("Excel file written successfully.");
             workbook.close();
@@ -400,7 +400,9 @@ public class PDFParser {
             e.printStackTrace();
         }
 
-        return "output\\ParsedTranscript.xlsx";
+        System.out.println("Saving ParsedTranscript.xlsx to: " + System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx");
+
+        return System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
     }
 
     /**
