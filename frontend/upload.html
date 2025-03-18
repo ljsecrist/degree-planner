@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Transcript</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Styles for autocomplete suggestions and selected items */
+    .autocomplete-suggestions {
+      border: 1px solid #ccc;
+      background: white;
+      position: absolute;
+      max-height: 150px;
+      overflow-y: auto;
+      width: calc(100% - 20px);
+      z-index: 1000;
+    }
+    .autocomplete-suggestion {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .autocomplete-suggestion:hover {
+      background-color: #f0f0f0;
+    }
+    .selected-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 12px;
+      margin: 2px;
+      cursor: pointer;
+    }
+    .autocomplete-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Your Transcript</h1>
+    <input type="file" id="fileInput" accept=".pdf">
+    <button id="uploadButton">Upload</button>
+    <p id="response"></p>
+
+    <h2>Select Your Options</h2>
+    
+    <div class="autocomplete-container">
+      <label for="majorInput">Select Up to 2 Majors:</label>
+      <input type="text" id="majorInput" placeholder="Type to search majors...">
+      <div id="majorSuggestions" class="autocomplete-suggestions"></div>
+      <div id="selectedMajors"></div>
+    </div>
+    
+    <div class="autocomplete-container">
+      <label for="minorInput">Select Up to 2 Minors:</label>
+      <input type="text" id="minorInput" placeholder="Type to search minors...">
+      <div id="minorSuggestions" class="autocomplete-suggestions"></div>
+      <div id="selectedMinors"></div>
+    </div>
+
+    <button id="submitButton">Submit Selections</button>
+
+    <h2>Student Progress</h2>
+    <pre id="studentProgress"></pre>
+    <button id="progressButton">View Progress</button>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
