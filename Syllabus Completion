@@ -25,3 +25,9 @@ Learning Outcomes:
 * Created a pretty clean UI using HTML, CSS, and JS. The actual output of the planner is relatively simple but accurately communicates the student's completion.
 * I did plan and execute the entire project from conception to implementation.
 * I took a PDF, converted the information into a spreadsheet, and then used that information to create a text-based planner.
+
+Shortcomings:
+* Only implemented a few majors and minors. However, instructions for adding new majors and minors can be found in the README.
+* Webpage isn't very private. Since the program stores the user's transcript, they can be pretty easily found. If I were to make this into a full, useable application, I would make everything private.
+* Some major/minor requirements cannot be represented in the program (i.e. prerequisite requirements). Since not even the registrar has a way of accurately representing these, it didn't seem realistic to attempt to account for these majors.
+* Grade requirements apply for all courses needed for a requirement, even if only some courses for a requirement has one.
