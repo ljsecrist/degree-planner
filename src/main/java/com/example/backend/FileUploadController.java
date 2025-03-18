@@ -35,26 +35,38 @@ public class FileUploadController {
      * @return a message indicating whether the file was processed successfully or an error occurred
      */
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public Map<String, String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        Map<String, String> response = new HashMap<>();
+        
         try {
-            // Save the file temporarily
+            // Create a unique filename using timestamp
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            String uniqueFilename = "transcript_" + timestamp + "_" + file.getOriginalFilename();
+
+            // Define the upload directory
             String uploadDir = System.getProperty("user.dir") + "/uploads/";
             File dir = new File(uploadDir);
-            if (!dir.exists()) dir.mkdirs(); // Create directory if not exists
+            if (!dir.exists()) dir.mkdirs(); // Ensure directory exists
 
-            File savedFile = new File(uploadDir + file.getOriginalFilename());
+            // Save the file with a unique name
+            File savedFile = new File(uploadDir + uniqueFilename);
             file.transferTo(savedFile);
 
             // Process the uploaded PDF using PDFParser
             PDFParser.processPDF(savedFile.getAbsolutePath());
 
-            return "File processed successfully: " + file.getOriginalFilename();
+            // Return the unique filename to the frontend
+            response.put("message", "File processed successfully.");
+            response.put("filename", uniqueFilename);
         } catch (IOException e) {
-            return "File upload failed: " + e.getMessage();
+            response.put("error", "File upload failed: " + e.getMessage());
         } catch (Exception e) {
-            return "Error processing file: " + e.getMessage();
+            response.put("error", "Error processing file: " + e.getMessage());
         }
+
+        return response;
     }
+
     
     /**
      * Retrieves dropdown options for majors and minors from Excel files.

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let majorAutocomplete, minorAutocomplete;
+
     fetchAutocompleteOptions().then(data => {
         // The API returns data.dropdown1 for majors and data.dropdown2 for minors.
         majorAutocomplete = setupAutocomplete("majorInput", "majorSuggestions", "selectedMajors", data.dropdown1, 2);
@@ -8,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("uploadButton").addEventListener("click", uploadFile);
     document.getElementById("submitButton").addEventListener("click", function() {
-        // Note: We now send keys "dropdown1" and "dropdown2" per the backend requirements.
         submitSelections(majorAutocomplete.getSelected(), minorAutocomplete.getSelected());
     });
     document.getElementById("progressButton").addEventListener("click", fetchStudentProgress);
@@ -51,7 +51,6 @@ function setupAutocomplete(inputId, suggestionId, selectedContainerId, optionsAr
         });
     });
 
-    // Hide suggestions when the input loses focus.
     input.addEventListener("blur", function() {
         setTimeout(() => suggestionContainer.innerHTML = "", 100);
     });
@@ -62,7 +61,6 @@ function setupAutocomplete(inputId, suggestionId, selectedContainerId, optionsAr
             const span = document.createElement("span");
             span.textContent = item + " ×";
             span.classList.add("selected-badge");
-            // Allow removal of a selection on click.
             span.addEventListener("click", function() {
                 selected = selected.filter(i => i !== item);
                 updateSelected();
@@ -76,14 +74,48 @@ function setupAutocomplete(inputId, suggestionId, selectedContainerId, optionsAr
     };
 }
 
+function uploadFile() {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select a file first.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("https://degree-planner-backend.onrender.com/api/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Expecting a JSON response now
+    .then(data => {
+        if (data.filename) {
+            localStorage.setItem("uploadedFilename", data.filename); // Store the unique filename
+            alert("File uploaded successfully!");
+        } else {
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(error => console.error("Error uploading file:", error));
+}
+
 function submitSelections(majors, minors) {
-    // Ensure the keys match the backend expectations: "dropdown1" for majors, "dropdown2" for minors.
+    let uploadedFilename = localStorage.getItem("uploadedFilename"); // Retrieve the unique filename
+
+    if (!uploadedFilename) {
+        alert("No uploaded transcript found. Please upload a file first.");
+        return;
+    }
+
     fetch("https://degree-planner-backend.onrender.com/api/submit-selections", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ dropdown1: majors, dropdown2: minors })
+        body: JSON.stringify({ dropdown1: majors, dropdown2: minors, filename: uploadedFilename })
     })
     .then(response => response.text())
     .then(data => alert("Selections submitted successfully: " + data))
@@ -91,36 +123,17 @@ function submitSelections(majors, minors) {
 }
 
 function fetchStudentProgress() {
-    fetch("https://degree-planner-backend.onrender.com/api/student-progress")
+    let uploadedFilename = localStorage.getItem("uploadedFilename"); // Retrieve unique filename
+
+    if (!uploadedFilename) {
+        alert("No student data available. Please upload a transcript first.");
+        return;
+    }
+
+    fetch("https://degree-planner-backend.onrender.com/api/student-progress?filename=" + uploadedFilename)
         .then(response => response.text())
         .then(data => {
             document.getElementById("studentProgress").textContent = data;
         })
         .catch(error => console.error("Error fetching student progress:", error));
-}
-
-function uploadFile() {
-    const fileInput = document.getElementById("fileInput");
-    const file = fileInput.files[0];
-    
-    if (!file) {
-        alert("Please select a file first.");
-        return;
-    }
-    
-    const formData = new FormData();
-    formData.append("file", file);
-    
-    fetch("https://degree-planner-backend.onrender.com/api/upload", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("response").textContent = data;
-        console.log("Upload successful:", data);
-    })
-    .catch(error => {
-        console.error("Error uploading file:", error);
-    });
 }
