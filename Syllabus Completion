@@ -1,0 +1,27 @@
+List of Objectives:
+
+* Enable students to construct and plan their majors, minors, and other academic programs.
+* Provide a clear, visual representation of their progress toward degree completion.
+* Parse uploaded transcripts to gather information on courses taken, grades received, and AP exam credits.
+* Automatically match transcript data to program requirements.
+* Differentiate between required, optional, and overlapping courses across programs.
+
+Learning Outcomes:
+
+* Develop efficient user interface designs for data visualization.
+* Plan and execute a comprehensive software development project from conception to implementation.
+* Design solutions for integrating disparate data formats (e.g., transcripts, spreadsheets) into a cohesive planner.
+
+Review:
+
+Objectives:
+* Using the program, students will be able to plan out their majors and minors. However, the program does not implement checks for Gen Eds or other academic programs. However, these could be implemented in the future.
+* The program's interface provides an intuitive representation of the completion of the student's degree.
+* The program can parse a PDF representation of a transcript from self-service, and create an Excel sheet correlating to that transcript.
+* The program iterates through the requirements of a major/minor and accurately confirms whether or not that requirement is completed, and if not, it details to what extent it has been completed.
+* The program differentiates between elective requirements, specific course requirements, and choices between multiple courses, and correctly identifies if a student has made progress towards that requirement with their completed courses.
+
+Learning Outcomes:
+* Created a pretty clean UI using HTML, CSS, and JS. The actual output of the planner is relatively simple but accurately communicates the student's completion.
+* I did plan and execute the entire project from conception to implementation.
+* I took a PDF, converted the information into a spreadsheet, and then used that information to create a text-based planner.
