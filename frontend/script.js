@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchAutocompleteOptions() {
-    return fetch("http://localhost:8080/api/dropdown-options")
+    return fetch("https://degree-planner-backend.onrender.com/api/dropdown-options")
         .then(response => response.json())
         .catch(error => console.error("Error fetching options:", error));
 }
@@ -78,7 +78,7 @@ function setupAutocomplete(inputId, suggestionId, selectedContainerId, optionsAr
 
 function submitSelections(majors, minors) {
     // Ensure the keys match the backend expectations: "dropdown1" for majors, "dropdown2" for minors.
-    fetch("http://localhost:8080/api/submit-selections", {
+    fetch("https://degree-planner-backend.onrender.com/api/submit-selections", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -91,7 +91,7 @@ function submitSelections(majors, minors) {
 }
 
 function fetchStudentProgress() {
-    fetch("http://localhost:8080/api/student-progress")
+    fetch("https://degree-planner-backend.onrender.com/api/student-progress")
         .then(response => response.text())
         .then(data => {
             document.getElementById("studentProgress").textContent = data;
@@ -111,7 +111,7 @@ function uploadFile() {
     const formData = new FormData();
     formData.append("file", file);
     
-    fetch("http://localhost:8080/api/upload", {
+    fetch("https://degree-planner-backend.onrender.com/api/upload", {
         method: "POST",
         body: formData
     })
