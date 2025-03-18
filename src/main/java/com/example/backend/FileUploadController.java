@@ -130,7 +130,7 @@ public class FileUploadController {
 
         // Store the generated Student object
 
-        String outputPath = System.getProperty("user.dir") + File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
+        String outputPath = File.separator + "output" + File.separator + "ParsedTranscript.xlsx";
 
         currentStudent = Driver.generatePlanner(outputPath, majors, minors);
 
